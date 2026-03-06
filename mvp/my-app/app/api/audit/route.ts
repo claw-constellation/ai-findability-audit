@@ -348,9 +348,20 @@ function calculateSemanticDepth(text: string, html: string): number {
   let score = 8; // Base score
 
   // Check for heading patterns in text (from Jina's markdown output)
-  const h1Matches = (text.match(/^#\s+.+$/gm) || []).length;
-  const h2Matches = (text.match(/^##\s+.+$/gm) || []).length;
-  const h3Matches = (text.match(/^###\s+.+$/gm) || []).length;
+  // Hash-style headings: # H1, ## H2, ### H3
+  const h1HashMatches = (text.match(/^#\s+.+$/gm) || []).length;
+  const h2HashMatches = (text.match(/^##\s+.+$/gm) || []).length;
+  const h3HashMatches = (text.match(/^###\s+.+$/gm) || []).length;
+  
+  // Underline-style headings: text followed by --- or ===
+  // Match line of text followed by line of === (H1) or --- (H2)
+  const h1UnderlineMatches = (text.match(/^.+\n={3,}$/gm) || []).length;
+  const h2UnderlineMatches = (text.match(/^.+\n-{3,}$/gm) || []).length;
+  
+  // Combined counts
+  const h1Matches = h1HashMatches + h1UnderlineMatches;
+  const h2Matches = h2HashMatches + h2UnderlineMatches;
+  const h3Matches = h3HashMatches;
 
   // Heading hierarchy quality (max 8 points)
   if (h1Matches === 1) score += 2;
