@@ -337,27 +337,51 @@ export default function LeaderboardPage() {
                 </div>
 
                 {/* Far Right: Key Features */}
-                <div className="flex items-center gap-2 lg:w-40 shrink-0 justify-end">
-                  {site.hasLLMsTxt && (
-                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20" title="Has llms.txt">
-                      <FileText className="w-4 h-4 text-emerald-400" />
-                    </span>
-                  )}
-                  {site.hasOpenAPI && (
-                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20" title="Has OpenAPI">
-                      <Code className="w-4 h-4 text-emerald-400" />
-                    </span>
-                  )}
-                  {site.hasSitemap && (
-                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20" title="Has Sitemap">
-                      <Map className="w-4 h-4 text-emerald-400" />
-                    </span>
-                  )}
-                  {site.hasRobots && (
-                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20" title="Has Robots.txt">
-                      <Globe className="w-4 h-4 text-emerald-400" />
-                    </span>
-                  )}
+                <div className="flex items-center gap-2 lg:w-44 shrink-0 justify-end">
+                  {/* llms.txt */}
+                  <span 
+                    className={`inline-flex items-center justify-center w-9 h-9 rounded-lg border transition-colors ${
+                      site.hasLLMsTxt 
+                        ? 'bg-emerald-500/10 border-emerald-500/30' 
+                        : 'bg-slate-800/50 border-slate-700/30'
+                    }`}
+                    title={site.hasLLMsTxt ? "Has llms.txt" : "Missing llms.txt"}
+                  >
+                    <FileText className={`w-4 h-4 ${site.hasLLMsTxt ? 'text-emerald-400' : 'text-slate-600'}`} />
+                  </span>
+                  {/* OpenAPI */}
+                  <span 
+                    className={`inline-flex items-center justify-center w-9 h-9 rounded-lg border transition-colors ${
+                      site.hasOpenAPI 
+                        ? 'bg-emerald-500/10 border-emerald-500/30' 
+                        : 'bg-slate-800/50 border-slate-700/30'
+                    }`}
+                    title={site.hasOpenAPI ? "Has OpenAPI" : "Missing OpenAPI"}
+                  >
+                    <Code className={`w-4 h-4 ${site.hasOpenAPI ? 'text-emerald-400' : 'text-slate-600'}`} />
+                  </span>
+                  {/* Sitemap */}
+                  <span 
+                    className={`inline-flex items-center justify-center w-9 h-9 rounded-lg border transition-colors ${
+                      site.hasSitemap 
+                        ? 'bg-emerald-500/10 border-emerald-500/30' 
+                        : 'bg-slate-800/50 border-slate-700/30'
+                    }`}
+                    title={site.hasSitemap ? "Has Sitemap" : "Missing Sitemap"}
+                  >
+                    <Map className={`w-4 h-4 ${site.hasSitemap ? 'text-emerald-400' : 'text-slate-600'}`} />
+                  </span>
+                  {/* Robots.txt */}
+                  <span 
+                    className={`inline-flex items-center justify-center w-9 h-9 rounded-lg border transition-colors ${
+                      site.hasRobots 
+                        ? 'bg-emerald-500/10 border-emerald-500/30' 
+                        : 'bg-slate-800/50 border-slate-700/30'
+                    }`}
+                    title={site.hasRobots ? "Has Robots.txt" : "Missing Robots.txt"}
+                  >
+                    <Globe className={`w-4 h-4 ${site.hasRobots ? 'text-emerald-400' : 'text-slate-600'}`} />
+                  </span>
                 </div>
               </div>
             </motion.div>
