@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Trophy, 
@@ -11,27 +12,42 @@ import {
   Map,
   ChevronRight,
   ArrowLeft,
-  Sparkles
+  Sparkles,
+  Loader2
 } from 'lucide-react';
 import Link from 'next/link';
 
-// Leaderboard data from our audits
-const leaderboardData = [
-  { rank: 1, site: 'ElevenLabs', url: 'elevenlabs.io', score: 79, grade: 'B', category: 'Agent-Ready', hasLLMsTxt: true, hasOpenAPI: true, hasSitemap: true, hasRobots: true },
-  { rank: 2, site: 'Linear', url: 'linear.app', score: 76, grade: 'B', category: 'Agent-Ready', hasLLMsTxt: true, hasOpenAPI: true, hasSitemap: true, hasRobots: true },
-  { rank: 3, site: 'Cloudflare Devs', url: 'developers.cloudflare.com', score: 69, grade: 'C', category: 'Agent-Compatible', hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: false, hasRobots: true },
-  { rank: 4, site: 'Vercel', url: 'vercel.com', score: 65, grade: 'C', category: 'Agent-Compatible', hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: false, hasRobots: true },
-  { rank: 5, site: 'Supabase', url: 'supabase.com', score: 65, grade: 'C', category: 'Agent-Compatible', hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: true, hasRobots: true },
-  { rank: 6, site: 'Next.js', url: 'nextjs.org', score: 63, grade: 'C', category: 'Agent-Compatible', hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: true, hasRobots: false },
-  { rank: 7, site: 'Stripe Docs', url: 'docs.stripe.com', score: 63, grade: 'C', category: 'Agent-Compatible', hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: false, hasRobots: false },
-  { rank: 8, site: 'GitHub', url: 'github.com', score: 62, grade: 'C', category: 'Agent-Compatible', hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: false, hasRobots: true },
-  { rank: 9, site: 'shadcn/ui', url: 'ui.shadcn.com', score: 59, grade: 'D', category: 'Agent-Challenged', hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: false, hasRobots: false },
-  { rank: 10, site: 'LangChain', url: 'python.langchain.com', score: 58, grade: 'D', category: 'Agent-Challenged', hasLLMsTxt: false, hasOpenAPI: false, hasSitemap: false, hasRobots: false },
-  { rank: 11, site: 'MDN', url: 'developer.mozilla.org', score: 57, grade: 'D', category: 'Agent-Challenged', hasLLMsTxt: false, hasOpenAPI: false, hasSitemap: true, hasRobots: true },
-  { rank: 12, site: 'Vercel AI SDK', url: 'sdk.vercel.ai', score: 54, grade: 'D', category: 'Agent-Challenged', hasLLMsTxt: false, hasOpenAPI: false, hasSitemap: false, hasRobots: false },
-  { rank: 13, site: 'Tailwind CSS', url: 'tailwindcss.com', score: 51, grade: 'D', category: 'Agent-Challenged', hasLLMsTxt: false, hasOpenAPI: false, hasSitemap: false, hasRobots: false },
-  { rank: 14, site: 'Anthropic', url: 'anthropic.com', score: 51, grade: 'D', category: 'Agent-Challenged', hasLLMsTxt: false, hasOpenAPI: false, hasSitemap: false, hasRobots: false },
-  { rank: 15, site: 'OpenAI', url: 'openai.com', score: 41, grade: 'F', category: 'Agent-Opaque', hasLLMsTxt: false, hasOpenAPI: false, hasSitemap: true, hasRobots: true },
+interface LeaderboardEntry {
+  rank: number;
+  site: string;
+  url: string;
+  score: number;
+  grade: string;
+  category: string;
+  hasLLMsTxt: boolean;
+  hasOpenAPI: boolean;
+  hasSitemap: boolean;
+  hasRobots: boolean;
+  createdAt: string;
+}
+
+// Default seed data (shown while loading or if API fails)
+const seedData: LeaderboardEntry[] = [
+  { rank: 1, site: 'ElevenLabs', url: 'elevenlabs.io', score: 79, grade: 'B', category: 'Agent-Ready', hasLLMsTxt: true, hasOpenAPI: true, hasSitemap: true, hasRobots: true, createdAt: new Date().toISOString() },
+  { rank: 2, site: 'Linear', url: 'linear.app', score: 76, grade: 'B', category: 'Agent-Ready', hasLLMsTxt: true, hasOpenAPI: true, hasSitemap: true, hasRobots: true, createdAt: new Date().toISOString() },
+  { rank: 3, site: 'Cloudflare Devs', url: 'developers.cloudflare.com', score: 69, grade: 'C', category: 'Agent-Compatible', hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: false, hasRobots: true, createdAt: new Date().toISOString() },
+  { rank: 4, site: 'Vercel', url: 'vercel.com', score: 65, grade: 'C', category: 'Agent-Compatible', hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: false, hasRobots: true, createdAt: new Date().toISOString() },
+  { rank: 5, site: 'Supabase', url: 'supabase.com', score: 65, grade: 'C', category: 'Agent-Compatible', hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: true, hasRobots: true, createdAt: new Date().toISOString() },
+  { rank: 6, site: 'Next.js', url: 'nextjs.org', score: 63, grade: 'C', category: 'Agent-Compatible', hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: true, hasRobots: false, createdAt: new Date().toISOString() },
+  { rank: 7, site: 'Stripe Docs', url: 'docs.stripe.com', score: 63, grade: 'C', category: 'Agent-Compatible', hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: false, hasRobots: false, createdAt: new Date().toISOString() },
+  { rank: 8, site: 'GitHub', url: 'github.com', score: 62, grade: 'C', category: 'Agent-Compatible', hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: false, hasRobots: true, createdAt: new Date().toISOString() },
+  { rank: 9, site: 'shadcn/ui', url: 'ui.shadcn.com', score: 59, grade: 'D', category: 'Agent-Challenged', hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: false, hasRobots: false, createdAt: new Date().toISOString() },
+  { rank: 10, site: 'LangChain', url: 'python.langchain.com', score: 58, grade: 'D', category: 'Agent-Challenged', hasLLMsTxt: false, hasOpenAPI: false, hasSitemap: false, hasRobots: false, createdAt: new Date().toISOString() },
+  { rank: 11, site: 'MDN', url: 'developer.mozilla.org', score: 57, grade: 'D', category: 'Agent-Challenged', hasLLMsTxt: false, hasOpenAPI: false, hasSitemap: true, hasRobots: true, createdAt: new Date().toISOString() },
+  { rank: 12, site: 'Vercel AI SDK', url: 'sdk.vercel.ai', score: 54, grade: 'D', category: 'Agent-Challenged', hasLLMsTxt: false, hasOpenAPI: false, hasSitemap: false, hasRobots: false, createdAt: new Date().toISOString() },
+  { rank: 13, site: 'Tailwind CSS', url: 'tailwindcss.com', score: 51, grade: 'D', category: 'Agent-Challenged', hasLLMsTxt: false, hasOpenAPI: false, hasSitemap: false, hasRobots: false, createdAt: new Date().toISOString() },
+  { rank: 14, site: 'Anthropic', url: 'anthropic.com', score: 51, grade: 'D', category: 'Agent-Challenged', hasLLMsTxt: false, hasOpenAPI: false, hasSitemap: false, hasRobots: false, createdAt: new Date().toISOString() },
+  { rank: 15, site: 'OpenAI', url: 'openai.com', score: 41, grade: 'F', category: 'Agent-Opaque', hasLLMsTxt: false, hasOpenAPI: false, hasSitemap: true, hasRobots: true, createdAt: new Date().toISOString() },
 ];
 
 const gradeColors: Record<string, string> = {
@@ -50,6 +66,32 @@ const rankIcons = [
 ];
 
 export default function LeaderboardPage() {
+  const [leaderboardData, setLeaderboardData] = useState<LeaderboardEntry[]>(seedData);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchLeaderboard() {
+      try {
+        const response = await fetch('/api/audit?leaderboard=true');
+        if (!response.ok) throw new Error('Failed to fetch leaderboard');
+        const data = await response.json();
+        if (data.entries && data.entries.length > 0) {
+          setLeaderboardData(data.entries);
+        }
+      } catch (err) {
+        setError('Using cached data - live updates unavailable');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchLeaderboard();
+    // Refresh every 30 seconds
+    const interval = setInterval(fetchLeaderboard, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#0a0a0f]">
       {/* Navigation */}
@@ -89,7 +131,11 @@ export default function LeaderboardPage() {
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm mb-6">
               <Trophy className="w-4 h-4" />
               <span>Live Rankings</span>
+              {loading && <Loader2 className="w-3 h-3 animate-spin" />}
             </div>
+            {error && (
+              <div className="text-sm text-amber-400 mb-4">{error}</div>
+            )}
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Agent Accessibility
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">

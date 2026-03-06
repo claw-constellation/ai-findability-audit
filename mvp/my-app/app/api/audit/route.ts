@@ -6,6 +6,23 @@ export const runtime = "nodejs";
 // In-memory storage for audits (replace with database in production)
 const audits = new Map();
 
+// Leaderboard storage - stores public audit results
+interface LeaderboardEntry {
+  id: string;
+  site: string;
+  url: string;
+  score: number;
+  grade: string;
+  category: string;
+  hasLLMsTxt: boolean;
+  hasOpenAPI: boolean;
+  hasSitemap: boolean;
+  hasRobots: boolean;
+  createdAt: string;
+}
+
+const leaderboard = new Map<string, LeaderboardEntry>();
+
 // A3 Framework: AI-Agent Accessibility Scorecard
 // Verification-based scoring (not heuristics)
 
@@ -48,6 +65,28 @@ export async function POST(request: NextRequest) {
     };
 
     audits.set(auditId, audit);
+
+    // Add to leaderboard (public data only)
+    const domain = validatedUrl.hostname.replace(/^www\./, '');
+    const leaderboardEntry: LeaderboardEntry = {
+      id: auditId,
+      site: domain,
+      url: validatedUrl.toString(),
+      score: analysis.scores.overall,
+      grade: analysis.grade,
+      category: analysis.category,
+      hasLLMsTxt: analysis.verifiedFiles.llmsTxt.exists,
+      hasOpenAPI: analysis.verifiedFiles.openapiJson.exists || analysis.verifiedFiles.openapiYaml.exists,
+      hasSitemap: analysis.verifiedFiles.sitemapXml.exists || analysis.verifiedFiles.sitemapIndex.exists,
+      hasRobots: analysis.verifiedFiles.robotsTxt.exists,
+      createdAt: new Date().toISOString(),
+    };
+
+    // Only add if not already exists (by domain), or update if new score
+    const existingEntry = Array.from(leaderboard.values()).find(e => e.site === domain);
+    if (!existingEntry) {
+      leaderboard.set(auditId, leaderboardEntry);
+    }
 
     return NextResponse.json({ auditId, status: "completed" });
   } catch (error) {
@@ -599,10 +638,22 @@ function generateA3Summary(scores: any, url: string, category: string) {
   return summaries[category] || `${domain} has an AI accessibility score of ${scores.overall}/100. Review the recommendations to improve your site's visibility to AI agents.`;
 }
 
-// GET endpoint to retrieve audit results
+// GET endpoint to retrieve audit results or leaderboard
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const auditId = searchParams.get("id");
+  const leaderboardParam = searchParams.get("leaderboard");
+
+  // Return leaderboard if requested
+  if (leaderboardParam === "true") {
+    const entries = Array.from(leaderboard.values())
+      .sort((a, b) => b.score - a.score)
+      .map((entry, index) => ({
+        rank: index + 1,
+        ...entry,
+      }));
+    return NextResponse.json({ entries, total: entries.length });
+  }
 
   if (!auditId) {
     return NextResponse.json(
