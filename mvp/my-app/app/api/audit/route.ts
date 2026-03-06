@@ -356,8 +356,21 @@ function calculateSemanticDepth(text: string, html: string): number {
   // Underline-style headings: text followed by --- or ===
   // Match line of text followed by line of === (H1) or --- (H2)
   // Handle both \n and \r\n line endings
-  const h1UnderlineMatches = (text.match(/^.+\r?\n={3,}$/gm) || []).length;
-  const h2UnderlineMatches = (text.match(/^.+\r?\n-{3,}$/gm) || []).length;
+  const h1UnderlinePattern = /^.+\r?\n={3,}$/gm;
+  const h2UnderlinePattern = /^.+\r?\n-{3,}$/gm;
+  const h1UnderlineMatches = (text.match(h1UnderlinePattern) || []).length;
+  const h2UnderlineMatches = (text.match(h2UnderlinePattern) || []).length;
+  
+  // Debug logging
+  console.log("Semantic Depth Debug:", {
+    textLength: text.length,
+    h1HashMatches,
+    h2HashMatches,
+    h3HashMatches,
+    h1UnderlineMatches,
+    h2UnderlineMatches,
+    sampleText: text.substring(0, 500),
+  });
   
   // Combined counts
   const h1Matches = h1HashMatches + h1UnderlineMatches;
