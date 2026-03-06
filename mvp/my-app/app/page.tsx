@@ -14,7 +14,8 @@ import {
   Target,
   BarChart3,
   Search,
-  Shield
+  Shield,
+  Trophy
 } from 'lucide-react';
 
 // Animated counter component
@@ -329,6 +330,11 @@ export default function Home() {
               <span className="font-bold text-xl text-white">AIFA</span>
             </div>
             <div className="hidden md:flex items-center gap-6 text-sm">
+              <a href="/leaderboard" className="text-slate-400 hover:text-cyan-400 transition-colors flex items-center gap-1">
+                <Trophy className="w-4 h-4" />
+                Leaderboard
+              </a>
+              <span className="text-slate-600">|</span>
               <span className="text-slate-400">AI Findability Audit</span>
               <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
                 <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
