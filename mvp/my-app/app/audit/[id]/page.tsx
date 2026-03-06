@@ -14,7 +14,13 @@ import {
   Target,
   Globe,
   Cpu,
-  Sparkles
+  Sparkles,
+  FileCode,
+  Database,
+  Search,
+  Layers,
+  Layout,
+  Award
 } from 'lucide-react';
 
 interface AuditData {
@@ -23,20 +29,26 @@ interface AuditData {
   email: string;
   createdAt: string;
   status: string;
+  framework: string;
+  version: string;
   analysis: {
     scores: {
       overall: number;
-      tokenEfficiency: number;
-      semanticStructure: number;
-      contentClarity: number;
-      schemaMarkup: number;
+      machineReadability: number;
+      semanticDepth: number;
+      agentDiscovery: number;
+      programmaticAccess: number;
+      contextEfficiency: number;
     };
+    grade: string;
+    category: string;
     recommendations: Array<{
       priority: string;
       category: string;
       title: string;
       description: string;
       impact: string;
+      action?: string;
     }>;
     summary: string;
     pageCount: number;
@@ -160,8 +172,8 @@ function CircularProgress({ value, size = 120, strokeWidth = 8 }: { value: numbe
   const offset = circumference - (value / 100) * circumference;
   
   const getColor = () => {
-    if (value >= 75) return '#10b981'; // emerald
-    if (value >= 50) return '#f59e0b'; // amber
+    if (value >= 80) return '#10b981'; // emerald
+    if (value >= 60) return '#f59e0b'; // amber
     return '#ef4444'; // red
   };
   
@@ -201,31 +213,51 @@ function CircularProgress({ value, size = 120, strokeWidth = 8 }: { value: numbe
 }
 
 // Score bar component
-function ScoreBar({ label, value, description }: { label: string; value: number; description: string }) {
+function ScoreBar({ 
+  label, 
+  value, 
+  description, 
+  icon: Icon,
+  max = 100 
+}: { 
+  label: string; 
+  value: number; 
+  description: string;
+  icon: React.ElementType;
+  max?: number;
+}) {
+  const percentage = (value / max) * 100;
   const getColor = () => {
-    if (value >= 75) return 'from-emerald-500 to-emerald-400';
-    if (value >= 50) return 'from-amber-500 to-amber-400';
+    if (percentage >= 80) return 'from-emerald-500 to-emerald-400';
+    if (percentage >= 60) return 'from-amber-500 to-amber-400';
     return 'from-red-500 to-red-400';
   };
   
   return (
     <GlassCard className="p-6">
-      <div className="flex items-center justify-between mb-3">
-        <div>
-          <h3 className="text-white font-semibold">{label}</h3>
-          <p className="text-slate-400 text-sm">{description}</p>
+      <div className="flex items-start gap-4">
+        <div className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20">
+          <Icon className="w-6 h-6 text-cyan-400" />
         </div>
-        <span className={`text-2xl font-bold ${value >= 75 ? 'text-emerald-400' : value >= 50 ? 'text-amber-400' : 'text-red-400'}`}>
-          {value}/100
-        </span>
-      </div>
-      <div className="h-3 bg-slate-800 rounded-full overflow-hidden">
-        <motion.div
-          className={`h-full bg-gradient-to-r ${getColor()}`}
-          initial={{ width: 0 }}
-          animate={{ width: `${value}%` }}
-          transition={{ duration: 1, ease: "easeOut" }}
-        />
+        <div className="flex-1">
+          <div className="flex items-center justify-between mb-2">
+            <div>
+              <h3 className="text-white font-semibold">{label}</h3>
+              <p className="text-slate-400 text-sm">{description}</p>
+            </div>
+            <span className={`text-2xl font-bold ${percentage >= 80 ? 'text-emerald-400' : percentage >= 60 ? 'text-amber-400' : 'text-red-400'}`}>
+              {value}/{max}
+            </span>
+          </div>
+          <div className="h-3 bg-slate-800 rounded-full overflow-hidden">
+            <motion.div
+              className={`h-full bg-gradient-to-r ${getColor()}`}
+              initial={{ width: 0 }}
+              animate={{ width: `${percentage}%` }}
+              transition={{ duration: 1, ease: "easeOut" }}
+            />
+          </div>
+        </div>
       </div>
     </GlassCard>
   );
@@ -243,6 +275,27 @@ function PriorityBadge({ priority }: { priority: string }) {
     <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${colors[priority as keyof typeof colors]}`}>
       {priority.toUpperCase()}
     </span>
+  );
+}
+
+// Grade badge component
+function GradeBadge({ grade, category }: { grade: string; category: string }) {
+  const getColors = () => {
+    if (grade === 'A+') return 'from-emerald-500 to-emerald-400 text-emerald-400';
+    if (grade === 'A') return 'from-emerald-400 to-cyan-400 text-emerald-400';
+    if (grade === 'B') return 'from-cyan-400 to-blue-400 text-cyan-400';
+    if (grade === 'C') return 'from-amber-400 to-orange-400 text-amber-400';
+    if (grade === 'D') return 'from-orange-400 to-red-400 text-orange-400';
+    return 'from-red-500 to-red-400 text-red-400';
+  };
+  
+  return (
+    <div className="flex flex-col items-center">
+      <div className={`text-6xl font-bold bg-gradient-to-r ${getColors()} bg-clip-text text-transparent`}>
+        {grade}
+      </div>
+      <div className="text-slate-400 text-sm mt-1">{category}</div>
+    </div>
   );
 }
 
@@ -280,8 +333,8 @@ export default function AuditResultsPage() {
             <div className="w-16 h-16 border-4 border-cyan-500/20 border-t-cyan-500 rounded-full animate-spin mx-auto" />
             <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-t-cyan-400 rounded-full animate-spin mx-auto" style={{ animationDuration: '1.5s' }} />
           </div>
-          <p className="mt-6 text-cyan-400 font-medium">Initializing scan sequence...</p>
-          <p className="mt-2 text-slate-500 text-sm">Analyzing target parameters</p>
+          <p className="mt-6 text-cyan-400 font-medium">Running A3 Framework analysis...</p>
+          <p className="mt-2 text-slate-500 text-sm">Evaluating AI-Agent Accessibility</p>
         </div>
       </div>
     );
@@ -343,15 +396,18 @@ export default function AuditResultsPage() {
             >
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-emerald-400 text-sm font-medium">ANALYSIS COMPLETE</span>
+                <span className="text-emerald-400 text-sm font-medium">A3 ANALYSIS COMPLETE</span>
               </div>
               <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
-                Audit Results
+                AI-Agent Accessibility Report
               </h1>
               <p className="text-slate-400 text-lg">{audit.url}</p>
+              <p className="text-slate-500 text-sm mt-2">
+                Framework: {audit.framework} v{audit.version}
+              </p>
             </motion.div>
 
-            {/* Overall Score */}
+            {/* Overall Score & Grade */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -360,10 +416,16 @@ export default function AuditResultsPage() {
             >
               <GlassCard glow className="p-8">
                 <div className="flex flex-col md:flex-row items-center gap-8">
-                  <CircularProgress value={audit.analysis.scores.overall} size={140} />
+                  <CircularProgress value={audit.analysis.scores.overall} size={160} strokeWidth={10} />
                   <div className="flex-1 text-center md:text-left">
+                    <div className="flex items-center justify-center md:justify-start gap-4 mb-4">
+                      <GradeBadge 
+                        grade={audit.analysis.grade} 
+                        category={audit.analysis.category} 
+                      />
+                    </div>
                     <h2 className="text-2xl font-bold text-white mb-3">
-                      Overall AI-Readability Score
+                      Overall A3 Score
                     </h2>
                     <p className="text-slate-400 text-lg leading-relaxed mb-4">
                       {audit.analysis.summary}
@@ -383,36 +445,83 @@ export default function AuditResultsPage() {
               </GlassCard>
             </motion.div>
 
-            {/* Score Breakdown */}
+            {/* A3 Five Pillars */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
               className="mb-12"
             >
-              <h2 className="text-2xl font-bold text-white mb-6">Dimension Analysis</h2>
+              <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                <Layers className="w-6 h-6 text-cyan-400" />
+                Five Pillars of AI-Readiness
+              </h2>
               <div className="grid md:grid-cols-2 gap-4">
                 <ScoreBar 
-                  label="Token Efficiency"
-                  value={audit.analysis.scores.tokenEfficiency}
-                  description="HTML-to-content ratio"
+                  label="Machine-Readability"
+                  value={audit.analysis.scores.machineReadability}
+                  max={20}
+                  description="Clean HTML vs. JS-bloat"
+                  icon={FileCode}
                 />
                 <ScoreBar 
-                  label="Semantic Structure"
-                  value={audit.analysis.scores.semanticStructure}
-                  description="Heading hierarchy & organization"
+                  label="Semantic Depth"
+                  value={audit.analysis.scores.semanticDepth}
+                  max={25}
+                  description="Structured data & heading hierarchies"
+                  icon={Database}
                 />
                 <ScoreBar 
-                  label="Content Clarity"
-                  value={audit.analysis.scores.contentClarity}
-                  description="Readability & key information"
+                  label="Agent Discovery"
+                  value={audit.analysis.scores.agentDiscovery}
+                  max={20}
+                  description="llms.txt & bot permissions"
+                  icon={Search}
                 />
                 <ScoreBar 
-                  label="Schema Markup"
-                  value={audit.analysis.scores.schemaMarkup}
-                  description="Structured data presence"
+                  label="Programmatic Access"
+                  value={audit.analysis.scores.programmaticAccess}
+                  max={20}
+                  description="API docs & endpoint clarity"
+                  icon={Layout}
+                />
+                <ScoreBar 
+                  label="Context Efficiency"
+                  value={audit.analysis.scores.contextEfficiency}
+                  max={15}
+                  description="Conciseness & token-optimization"
+                  icon={Zap}
                 />
               </div>
+            </motion.div>
+
+            {/* A3 Framework Explanation */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.25 }}
+              className="mb-12"
+            >
+              <GlassCard className="p-6">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <Award className="w-5 h-5 text-cyan-400" />
+                  Understanding Your A3 Grade
+                </h3>
+                <div className="grid md:grid-cols-3 gap-4 text-sm">
+                  <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                    <div className="font-semibold text-emerald-400 mb-1">A+ / A (90-100)</div>
+                    <div className="text-slate-400">Agent-Native / Agent-Optimized</div>
+                  </div>
+                  <div className="p-4 rounded-xl bg-cyan-500/10 border border-cyan-500/20">
+                    <div className="font-semibold text-cyan-400 mb-1">B / C (60-89)</div>
+                    <div className="text-slate-400">Agent-Ready / Agent-Compatible</div>
+                  </div>
+                  <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20">
+                    <div className="font-semibold text-red-400 mb-1">D / F (0-59)</div>
+                    <div className="text-slate-400">Agent-Challenged / Agent-Opaque</div>
+                  </div>
+                </div>
+              </GlassCard>
             </motion.div>
 
             {/* Recommendations */}
@@ -432,14 +541,22 @@ export default function AuditResultsPage() {
                     transition={{ delay: 0.3 + index * 0.1 }}
                   >
                     <GlassCard className="p-6 hover:border-cyan-500/30 transition-colors">
-                      <div className="flex flex-col md:flex-row md:items-start gap-4">
-                        <div className="flex items-center gap-3 md:flex-col md:items-start md:w-32 flex-shrink-0">
-                          <PriorityBadge priority={rec.priority} />
-                          <span className="text-slate-500 text-sm">{rec.category}</span>
+                      <div className="flex flex-col gap-4">
+                        <div className="flex items-start justify-between">
+                          <div className="flex items-center gap-3">
+                            <PriorityBadge priority={rec.priority} />
+                            <span className="text-cyan-400 text-sm font-medium">{rec.category}</span>
+                          </div>
                         </div>
-                        <div className="flex-1">
+                        <div>
                           <h3 className="text-lg font-semibold text-white mb-2">{rec.title}</h3>
                           <p className="text-slate-400 mb-3">{rec.description}</p>
+                          {rec.action && (
+                            <div className="p-3 rounded-lg bg-slate-800/50 border border-slate-700 mb-3">
+                              <span className="text-slate-500 text-xs uppercase tracking-wider">Action:</span>
+                              <p className="text-slate-300 text-sm mt-1">{rec.action}</p>
+                            </div>
+                          )}
                           <p className="text-cyan-400 text-sm flex items-center gap-2">
                             <Zap className="w-4 h-4" />
                             Impact: {rec.impact}
@@ -463,14 +580,14 @@ export default function AuditResultsPage() {
                   <Cpu className="w-8 h-8 text-white" />
                 </div>
                 <h2 className="text-2xl font-bold text-white mb-3">
-                  Want us to fix these issues?
+                  Want to achieve Agent-Native status?
                 </h2>
                 <p className="text-slate-400 mb-6 max-w-xl mx-auto">
-                  Our team can implement all recommendations and make your site fully AI-ready. 
-                  Get a detailed implementation plan.
+                  Our team can implement all A3 Framework recommendations and make your site 
+                  fully optimized for AI agents. Get a detailed implementation roadmap.
                 </p>
                 <button className="px-8 py-4 rounded-xl bg-cyan-500 text-slate-950 font-semibold hover:bg-cyan-400 hover:shadow-[0_0_30px_rgba(0,212,255,0.5)] transition-all">
-                  Get Implementation Quote
+                  Get A3 Implementation Plan
                 </button>
               </GlassCard>
             </motion.div>
@@ -478,6 +595,7 @@ export default function AuditResultsPage() {
             {/* Footer */}
             <footer className="mt-12 text-center text-sm text-slate-500">
               <p>Audit generated on {new Date(audit.createdAt).toLocaleDateString()}</p>
+              <p className="mt-1">Using A3 (AI-Agent Accessibility) Framework v1.0</p>
             </footer>
           </div>
         </div>
