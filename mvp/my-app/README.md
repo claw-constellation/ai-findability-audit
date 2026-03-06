@@ -2,6 +2,8 @@
 
 A Next.js application that analyzes websites for AI-readability and provides actionable recommendations to improve visibility in AI answer engines like Perplexity, ChatGPT, and Google AI Overviews.
 
+**Live URL:** https://ai-findability-audit.vercel.app
+
 ## The Problem
 
 69% of Google searches now end without a click. AI answer engines are becoming the new gatekeepers of information. If your website isn't structured for AI consumption, you're invisible to the fastest-growing search channel.
@@ -44,6 +46,15 @@ cp .env.local.example .env.local
 npm i -g vercel
 vercel
 ```
+
+### GitHub Actions Auto-Deploy
+
+This repo includes a GitHub Actions workflow that auto-deploys on every push to master/main.
+
+Required secrets:
+- `VERCEL_TOKEN`
+- `VERCEL_ORG_ID`
+- `VERCEL_PROJECT_ID`
 
 ## Architecture
 
