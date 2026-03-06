@@ -1,0 +1,84 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "AI Findability Audit API",
+    "description": "Analyze website AI-readability using the A3 Framework",
+    "version": "2.0.0",
+    "contact": {
+      "name": "AI Findability Audit"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://ai-findability-audit.vercel.app/api",
+      "description": "Production API"
+    }
+  ],
+  "paths": {
+    "/audit": {
+      "post": {
+        "summary": "Submit website for audit",
+        "description": "Analyze a website's AI accessibility using the A3 Framework",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": "Website URL to analyze"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Email for results notification"
+                  }
+                },
+                "required": ["url", "email"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Audit submitted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "auditId": { "type": "string" },
+                    "status": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get audit results or leaderboard",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Audit ID to retrieve",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "leaderboard",
+            "in": "query",
+            "description": "Set to 'true' to get leaderboard",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Audit results or leaderboard data"
+          }
+        }
+      }
+    }
+  }
+}

@@ -17,8 +17,32 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const schemaOrg = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "AI Findability Audit",
+    "description": "Analyze your website's AI-readability and get actionable recommendations to appear in Perplexity, ChatGPT, and Google AI Overviews.",
+    "url": "https://ai-findability-audit.vercel.app",
+    "applicationCategory": "DeveloperApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Claw Constellation"
+    }
+  };
+
   return (
     <html lang="en" className="dark">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
+        />
+      </head>
       <body
         className={`${inter.variable} font-sans antialiased bg-[#0a0a0f] text-slate-200`}
       >

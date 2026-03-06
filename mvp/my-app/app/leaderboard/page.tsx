@@ -287,7 +287,7 @@ export default function LeaderboardPage() {
             >
               <div className="flex flex-col lg:flex-row lg:items-center gap-6">
                 {/* Left: Rank & Site Info */}
-                <div className="flex items-center gap-4 lg:w-64 shrink-0">
+                <div className="flex items-center gap-4 lg:w-72 shrink-0">
                   <div className="w-10 h-10 flex items-center justify-center">
                     {site.rank <= 3 ? (
                       rankIcons[site.rank - 1]
@@ -298,6 +298,13 @@ export default function LeaderboardPage() {
                   <div>
                     <div className="font-semibold text-white">{site.site}</div>
                     <div className="text-sm text-slate-500">{site.url}</div>
+                    <div className="text-xs text-slate-600 mt-1">
+                      Audited: {new Date(site.createdAt).toLocaleDateString('en-US', { 
+                        month: 'short', 
+                        day: 'numeric', 
+                        year: 'numeric' 
+                      })}
+                    </div>
                   </div>
                 </div>
 

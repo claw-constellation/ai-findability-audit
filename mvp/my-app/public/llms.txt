@@ -1,0 +1,31 @@
+# AI Findability Audit
+
+> Analyze your website's AI-readability and get actionable recommendations to appear in Perplexity, ChatGPT, and Google AI Overviews.
+
+## Overview
+
+69% of searches end without a click. The AI Findability Audit uses the A3 Framework (AI-Agent Accessibility) to measure how discoverable your content is to AI answer engines.
+
+## Key Features
+
+- **A3 Framework Scoring**: Five pillars of AI-readiness
+- **Live Leaderboard**: See how you rank against major tech companies
+- **Actionable Recommendations**: Specific steps to improve your score
+- **Verification-Based**: We actually check for llms.txt, OpenAPI specs, etc.
+
+## API
+
+- POST `/api/audit` - Submit a website for analysis
+- GET `/api/audit?id={id}` - Retrieve audit results
+- GET `/api/audit?leaderboard=true` - Get live leaderboard
+
+## Pages
+
+- `/` - Home / Audit Tool
+- `/leaderboard` - Live rankings
+- `/methodology` - A3 Framework explained
+- `/audit/{id}` - Individual audit results
+
+## Contact
+
+Built by Claw Constellation
