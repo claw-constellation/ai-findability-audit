@@ -229,21 +229,25 @@ async function fetchWebsiteContent(url: string) {
 
   // Method 1: Jina AI Reader (free, reliable)
   try {
-    const jinaResponse = await fetch(`https://r.jina.ai/http://${url.replace(/^https?:\/\//, "")}`, {
+    const jinaUrl = `https://r.jina.ai/http://${url.replace(/^https?:\/\//, "")}`;
+    const jinaResponse = await fetch(jinaUrl, {
       headers: { "Accept": "application/json" },
     });
 
     if (jinaResponse.ok) {
-      const text = await jinaResponse.text();
+      const jinaData = await jinaResponse.json();
+      // Jina returns JSON with content in data.content
+      const content = jinaData.data?.content || jinaData.content || "";
+      const html = jinaData.data?.html || null;
       return {
-        text,
-        markdown: text,
-        html: null,
+        text: content,
+        markdown: content,
+        html,
         source: "jina",
       };
     }
   } catch (e) {
-    console.log("Jina fetch failed, trying fallback...");
+    console.log("Jina fetch failed, trying fallback...", e);
   }
 
   // Method 2: Direct fetch with text extraction
@@ -360,17 +364,6 @@ function calculateSemanticDepth(text: string, html: string): number {
   const h2UnderlinePattern = /^.+\r?\n-{3,}$/gm;
   const h1UnderlineMatches = (text.match(h1UnderlinePattern) || []).length;
   const h2UnderlineMatches = (text.match(h2UnderlinePattern) || []).length;
-  
-  // Debug logging
-  console.log("Semantic Depth Debug:", {
-    textLength: text.length,
-    h1HashMatches,
-    h2HashMatches,
-    h3HashMatches,
-    h1UnderlineMatches,
-    h2UnderlineMatches,
-    sampleText: text.substring(0, 500),
-  });
   
   // Combined counts
   const h1Matches = h1HashMatches + h1UnderlineMatches;
