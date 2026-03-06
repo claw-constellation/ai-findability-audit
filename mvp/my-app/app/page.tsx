@@ -270,16 +270,30 @@ export default function Home() {
   const [email, setEmail] = useState('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
+  // URL autocomplete helper
+  const normalizeUrl = (input: string): string => {
+    let normalized = input.trim();
+    
+    // If no protocol, add https://
+    if (!normalized.match(/^https?:\/\//i)) {
+      normalized = `https://${normalized}`;
+    }
+    
+    return normalized;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!url || !email) return;
+    
+    const normalizedUrl = normalizeUrl(url);
     
     setIsAnalyzing(true);
     // Simulate analysis delay
     await new Promise(resolve => setTimeout(resolve, 2000));
     
     // Redirect to results (mock)
-    window.location.href = `/audit/demo?url=${encodeURIComponent(url)}`;
+    window.location.href = `/audit/demo?url=${encodeURIComponent(normalizedUrl)}`;
   };
 
   return (
@@ -383,14 +397,24 @@ export default function Home() {
                     <div className="relative">
                       <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
                       <input
-                        type="url"
+                        type="text"
                         value={url}
                         onChange={(e) => setUrl(e.target.value)}
-                        placeholder="https://example.com"
+                        placeholder="netflix.com or https://netflix.com"
                         className="w-full pl-12 pr-4 py-4 rounded-xl bg-slate-950/50 border border-slate-700 text-white placeholder-slate-500 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all outline-none"
                         required
                       />
                     </div>
+                    {url && !url.match(/^https?:\/\//i) && (
+                      <motion.p
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mt-2 text-sm text-cyan-400 flex items-center gap-2"
+                      >
+                        <Sparkles className="w-3 h-3" />
+                        Will scan: {normalizeUrl(url)}
+                      </motion.p>
+                    )}
                   </div>
                   
                   <div>
