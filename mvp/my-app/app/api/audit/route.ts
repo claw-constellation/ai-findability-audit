@@ -227,7 +227,21 @@ async function checkFile(
 async function fetchWebsiteContent(url: string) {
   // Try multiple methods to fetch content
 
-  // Method 1: Jina AI Reader (free, reliable)
+  // Method 1: Jina AI Reader (free, reliable) + Direct HTML fetch
+  let htmlContent: string | null = null;
+  
+  // Fetch HTML separately for Machine-Readability analysis
+  try {
+    const htmlResponse = await fetch(url, {
+      headers: { "User-Agent": "Mozilla/5.0 (compatible; A3-Audit/2.0)" },
+    });
+    if (htmlResponse.ok) {
+      htmlContent = await htmlResponse.text();
+    }
+  } catch (e) {
+    console.log("HTML fetch failed, continuing with text-only analysis...");
+  }
+  
   try {
     const jinaUrl = `https://r.jina.ai/http://${url.replace(/^https?:\/\//, "")}`;
     const jinaResponse = await fetch(jinaUrl, {
@@ -238,11 +252,10 @@ async function fetchWebsiteContent(url: string) {
       const jinaData = await jinaResponse.json();
       // Jina returns JSON with content in data.content
       const content = jinaData.data?.content || jinaData.content || "";
-      const html = jinaData.data?.html || null;
       return {
         text: content,
         markdown: content,
-        html,
+        html: htmlContent,
         source: "jina",
       };
     }
