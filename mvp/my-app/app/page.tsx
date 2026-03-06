@@ -330,6 +330,9 @@ export default function Home() {
               <span className="font-bold text-xl text-white">AIFA</span>
             </div>
             <div className="hidden md:flex items-center gap-6 text-sm">
+              <a href="/methodology" className="text-slate-400 hover:text-cyan-400 transition-colors">
+                Methodology
+              </a>
               <a href="/leaderboard" className="text-slate-400 hover:text-cyan-400 transition-colors flex items-center gap-1">
                 <Trophy className="w-4 h-4" />
                 Leaderboard

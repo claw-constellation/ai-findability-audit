@@ -108,6 +108,12 @@ export default function LeaderboardPage() {
             </Link>
             <div className="flex items-center gap-6">
               <Link 
+                href="/methodology" 
+                className="text-sm text-slate-400 hover:text-cyan-400 transition-colors"
+              >
+                Methodology
+              </Link>
+              <Link 
                 href="/" 
                 className="text-sm text-slate-400 hover:text-cyan-400 transition-colors flex items-center gap-1"
               >
