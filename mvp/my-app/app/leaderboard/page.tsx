@@ -8,7 +8,7 @@ import {
   Globe, 
   FileText, 
   Code, 
-  Sitemap,
+  Map,
   ChevronRight,
   ArrowLeft,
   Sparkles
@@ -151,7 +151,7 @@ export default function LeaderboardPage() {
                 <Code className="w-4 h-4 mx-auto" />
               </div>
               <div className="text-center" title="Sitemap">
-                <Sitemap className="w-4 h-4 mx-auto" />
+                <Map className="w-4 h-4 mx-auto" />
               </div>
               <div className="text-center" title="Robots.txt">
                 <Globe className="w-4 h-4 mx-auto" />
