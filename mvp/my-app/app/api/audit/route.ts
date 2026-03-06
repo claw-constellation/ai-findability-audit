@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
+// Force Node.js runtime (not Edge)
+export const runtime = "nodejs";
+
 // In-memory storage for audits (replace with database in production)
 const audits = new Map();
 
