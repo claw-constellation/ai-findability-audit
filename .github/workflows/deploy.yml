@@ -36,6 +36,7 @@ jobs:
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_PROJECT_SETTINGS: '{"framework":"nextjs","buildCommand":"npm run build","outputDirectory":".next","installCommand":"npm ci","rootDirectory":"mvp/my-app"}'
 
       - name: Deploy to Vercel (Preview)
         if: github.event_name == 'pull_request'
@@ -43,3 +44,4 @@ jobs:
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_PROJECT_SETTINGS: '{"framework":"nextjs","buildCommand":"npm run build","outputDirectory":".next","installCommand":"npm ci","rootDirectory":"mvp/my-app"}'
