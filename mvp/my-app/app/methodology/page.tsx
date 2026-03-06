@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { 
+  Scan,
   BookOpen, 
   ChevronRight,
   ArrowLeft,
@@ -122,12 +123,12 @@ export default function MethodologyPage() {
       <nav className="border-b border-slate-800/50 bg-[#0a0a0f]/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
-                <BookOpen className="w-5 h-5 text-white" />
+            <Link href="/" className="flex items-center gap-3 group">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-violet-500 flex items-center justify-center">
+                <Scan className="w-5 h-5 text-slate-950" />
               </div>
-              <span className="text-lg font-semibold text-slate-100 group-hover:text-cyan-400 transition-colors">
-                AI Findability
+              <span className="font-bold text-xl text-white group-hover:text-cyan-400 transition-colors">
+                AIFA
               </span>
             </Link>
             <div className="flex items-center gap-6">
