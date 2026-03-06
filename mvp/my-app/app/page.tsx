@@ -282,18 +282,35 @@ export default function Home() {
     return normalized;
   };
 
+  const [error, setError] = useState('');
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!url || !email) return;
     
     const normalizedUrl = normalizeUrl(url);
-    
+    setError('');
     setIsAnalyzing(true);
-    // Simulate analysis delay
-    await new Promise(resolve => setTimeout(resolve, 2000));
     
-    // Redirect to results (mock)
-    window.location.href = `/audit/demo?url=${encodeURIComponent(normalizedUrl)}`;
+    try {
+      const response = await fetch('/api/audit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: normalizedUrl, email }),
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to analyze website');
+      }
+      
+      // Redirect to results page
+      window.location.href = `/audit/${data.auditId}`;
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
+      setIsAnalyzing(false);
+    }
   };
 
   return (
@@ -433,6 +450,16 @@ export default function Home() {
                       />
                     </div>
                   </div>
+                  
+                  {error && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm"
+                    >
+                      {error}
+                    </motion.div>
+                  )}
                   
                   <GlowButton disabled={isAnalyzing}>
                     {isAnalyzing ? (
