@@ -197,7 +197,7 @@ export default function LeaderboardPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-slate-900/30 border border-slate-800 rounded-xl p-6">
           <h3 className="text-sm font-medium text-slate-400 mb-4">A3 Framework: Five Pillars</h3>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm mb-6">
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-cyan-400" />
               <span className="text-slate-300">Machine-Readability</span>
@@ -223,6 +223,52 @@ export default function LeaderboardPage() {
               <span className="text-slate-300">Context Efficiency</span>
               <span className="text-slate-500 text-xs">/15</span>
             </div>
+          </div>
+          
+          {/* Feature Icons Legend */}
+          <div className="border-t border-slate-800 pt-4">
+            <h4 className="text-sm font-medium text-slate-400 mb-3">Key Infrastructure Icons</h4>
+            <div className="flex flex-wrap items-center gap-6 text-sm">
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/30">
+                  <FileText className="w-4 h-4 text-emerald-400" />
+                </span>
+                <div>
+                  <span className="text-slate-300">llms.txt</span>
+                  <span className="text-slate-500 text-xs block">AI agent discovery file</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/30">
+                  <Code className="w-4 h-4 text-emerald-400" />
+                </span>
+                <div>
+                  <span className="text-slate-300">OpenAPI</span>
+                  <span className="text-slate-500 text-xs block">API specification</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/30">
+                  <Map className="w-4 h-4 text-emerald-400" />
+                </span>
+                <div>
+                  <span className="text-slate-300">Sitemap</span>
+                  <span className="text-slate-500 text-xs block">XML sitemap</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/30">
+                  <Globe className="w-4 h-4 text-emerald-400" />
+                </span>
+                <div>
+                  <span className="text-slate-300">Robots.txt</span>
+                  <span className="text-slate-500 text-xs block">Crawler directives</span>
+                </div>
+              </div>
+            </div>
+            <p className="text-xs text-slate-500 mt-3">
+              <span className="text-emerald-400">Green</span> = present, <span className="text-slate-600">Gray</span> = missing
+            </p>
           </div>
         </div>
       </div>
