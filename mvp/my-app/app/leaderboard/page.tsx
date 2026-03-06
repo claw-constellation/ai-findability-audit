@@ -24,6 +24,13 @@ interface LeaderboardEntry {
   score: number;
   grade: string;
   category: string;
+  // A3 Framework: Five Pillars
+  machineReadability: number;
+  semanticDepth: number;
+  agentDiscovery: number;
+  programmaticAccess: number;
+  contextEfficiency: number;
+  // Feature flags
   hasLLMsTxt: boolean;
   hasOpenAPI: boolean;
   hasSitemap: boolean;
@@ -33,21 +40,21 @@ interface LeaderboardEntry {
 
 // Default seed data (shown while loading or if API fails)
 const seedData: LeaderboardEntry[] = [
-  { rank: 1, site: 'ElevenLabs', url: 'elevenlabs.io', score: 79, grade: 'B', category: 'Agent-Ready', hasLLMsTxt: true, hasOpenAPI: true, hasSitemap: true, hasRobots: true, createdAt: new Date().toISOString() },
-  { rank: 2, site: 'Linear', url: 'linear.app', score: 76, grade: 'B', category: 'Agent-Ready', hasLLMsTxt: true, hasOpenAPI: true, hasSitemap: true, hasRobots: true, createdAt: new Date().toISOString() },
-  { rank: 3, site: 'Cloudflare Devs', url: 'developers.cloudflare.com', score: 69, grade: 'C', category: 'Agent-Compatible', hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: false, hasRobots: true, createdAt: new Date().toISOString() },
-  { rank: 4, site: 'Vercel', url: 'vercel.com', score: 65, grade: 'C', category: 'Agent-Compatible', hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: false, hasRobots: true, createdAt: new Date().toISOString() },
-  { rank: 5, site: 'Supabase', url: 'supabase.com', score: 65, grade: 'C', category: 'Agent-Compatible', hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: true, hasRobots: true, createdAt: new Date().toISOString() },
-  { rank: 6, site: 'Next.js', url: 'nextjs.org', score: 63, grade: 'C', category: 'Agent-Compatible', hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: true, hasRobots: false, createdAt: new Date().toISOString() },
-  { rank: 7, site: 'Stripe Docs', url: 'docs.stripe.com', score: 63, grade: 'C', category: 'Agent-Compatible', hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: false, hasRobots: false, createdAt: new Date().toISOString() },
-  { rank: 8, site: 'GitHub', url: 'github.com', score: 62, grade: 'C', category: 'Agent-Compatible', hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: false, hasRobots: true, createdAt: new Date().toISOString() },
-  { rank: 9, site: 'shadcn/ui', url: 'ui.shadcn.com', score: 59, grade: 'D', category: 'Agent-Challenged', hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: false, hasRobots: false, createdAt: new Date().toISOString() },
-  { rank: 10, site: 'LangChain', url: 'python.langchain.com', score: 58, grade: 'D', category: 'Agent-Challenged', hasLLMsTxt: false, hasOpenAPI: false, hasSitemap: false, hasRobots: false, createdAt: new Date().toISOString() },
-  { rank: 11, site: 'MDN', url: 'developer.mozilla.org', score: 57, grade: 'D', category: 'Agent-Challenged', hasLLMsTxt: false, hasOpenAPI: false, hasSitemap: true, hasRobots: true, createdAt: new Date().toISOString() },
-  { rank: 12, site: 'Vercel AI SDK', url: 'sdk.vercel.ai', score: 54, grade: 'D', category: 'Agent-Challenged', hasLLMsTxt: false, hasOpenAPI: false, hasSitemap: false, hasRobots: false, createdAt: new Date().toISOString() },
-  { rank: 13, site: 'Tailwind CSS', url: 'tailwindcss.com', score: 51, grade: 'D', category: 'Agent-Challenged', hasLLMsTxt: false, hasOpenAPI: false, hasSitemap: false, hasRobots: false, createdAt: new Date().toISOString() },
-  { rank: 14, site: 'Anthropic', url: 'anthropic.com', score: 51, grade: 'D', category: 'Agent-Challenged', hasLLMsTxt: false, hasOpenAPI: false, hasSitemap: false, hasRobots: false, createdAt: new Date().toISOString() },
-  { rank: 15, site: 'OpenAI', url: 'openai.com', score: 41, grade: 'F', category: 'Agent-Opaque', hasLLMsTxt: false, hasOpenAPI: false, hasSitemap: true, hasRobots: true, createdAt: new Date().toISOString() },
+  { rank: 1, site: 'ElevenLabs', url: 'elevenlabs.io', score: 79, grade: 'B', category: 'Agent-Ready', machineReadability: 18, semanticDepth: 12, agentDiscovery: 20, programmaticAccess: 20, contextEfficiency: 9, hasLLMsTxt: true, hasOpenAPI: true, hasSitemap: true, hasRobots: true, createdAt: new Date().toISOString() },
+  { rank: 2, site: 'Linear', url: 'linear.app', score: 76, grade: 'B', category: 'Agent-Ready', machineReadability: 18, semanticDepth: 12, agentDiscovery: 20, programmaticAccess: 18, contextEfficiency: 8, hasLLMsTxt: true, hasOpenAPI: true, hasSitemap: true, hasRobots: true, createdAt: new Date().toISOString() },
+  { rank: 3, site: 'Cloudflare Devs', url: 'developers.cloudflare.com', score: 69, grade: 'C', category: 'Agent-Compatible', machineReadability: 18, semanticDepth: 12, agentDiscovery: 17, programmaticAccess: 11, contextEfficiency: 11, hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: false, hasRobots: true, createdAt: new Date().toISOString() },
+  { rank: 4, site: 'Vercel', url: 'vercel.com', score: 65, grade: 'C', category: 'Agent-Compatible', machineReadability: 18, semanticDepth: 12, agentDiscovery: 15, programmaticAccess: 11, contextEfficiency: 9, hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: false, hasRobots: true, createdAt: new Date().toISOString() },
+  { rank: 5, site: 'Supabase', url: 'supabase.com', score: 65, grade: 'C', category: 'Agent-Compatible', machineReadability: 18, semanticDepth: 10, agentDiscovery: 16, programmaticAccess: 13, contextEfficiency: 8, hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: true, hasRobots: true, createdAt: new Date().toISOString() },
+  { rank: 6, site: 'Next.js', url: 'nextjs.org', score: 63, grade: 'C', category: 'Agent-Compatible', machineReadability: 18, semanticDepth: 10, agentDiscovery: 13, programmaticAccess: 13, contextEfficiency: 9, hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: true, hasRobots: false, createdAt: new Date().toISOString() },
+  { rank: 7, site: 'Stripe Docs', url: 'docs.stripe.com', score: 63, grade: 'C', category: 'Agent-Compatible', machineReadability: 18, semanticDepth: 10, agentDiscovery: 12, programmaticAccess: 13, contextEfficiency: 10, hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: false, hasRobots: false, createdAt: new Date().toISOString() },
+  { rank: 8, site: 'GitHub', url: 'github.com', score: 62, grade: 'C', category: 'Agent-Compatible', machineReadability: 18, semanticDepth: 10, agentDiscovery: 13, programmaticAccess: 10, contextEfficiency: 11, hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: false, hasRobots: true, createdAt: new Date().toISOString() },
+  { rank: 9, site: 'shadcn/ui', url: 'ui.shadcn.com', score: 59, grade: 'D', category: 'Agent-Challenged', machineReadability: 18, semanticDepth: 10, agentDiscovery: 10, programmaticAccess: 10, contextEfficiency: 11, hasLLMsTxt: true, hasOpenAPI: false, hasSitemap: false, hasRobots: false, createdAt: new Date().toISOString() },
+  { rank: 10, site: 'LangChain', url: 'python.langchain.com', score: 58, grade: 'D', category: 'Agent-Challenged', machineReadability: 18, semanticDepth: 12, agentDiscovery: 4, programmaticAccess: 13, contextEfficiency: 11, hasLLMsTxt: false, hasOpenAPI: false, hasSitemap: false, hasRobots: false, createdAt: new Date().toISOString() },
+  { rank: 11, site: 'MDN', url: 'developer.mozilla.org', score: 57, grade: 'D', category: 'Agent-Challenged', machineReadability: 18, semanticDepth: 10, agentDiscovery: 8, programmaticAccess: 10, contextEfficiency: 11, hasLLMsTxt: false, hasOpenAPI: false, hasSitemap: true, hasRobots: true, createdAt: new Date().toISOString() },
+  { rank: 12, site: 'Vercel AI SDK', url: 'sdk.vercel.ai', score: 54, grade: 'D', category: 'Agent-Challenged', machineReadability: 18, semanticDepth: 10, agentDiscovery: 4, programmaticAccess: 11, contextEfficiency: 11, hasLLMsTxt: false, hasOpenAPI: false, hasSitemap: false, hasRobots: false, createdAt: new Date().toISOString() },
+  { rank: 13, site: 'Tailwind CSS', url: 'tailwindcss.com', score: 51, grade: 'D', category: 'Agent-Challenged', machineReadability: 18, semanticDepth: 10, agentDiscovery: 2, programmaticAccess: 11, contextEfficiency: 10, hasLLMsTxt: false, hasOpenAPI: false, hasSitemap: false, hasRobots: false, createdAt: new Date().toISOString() },
+  { rank: 14, site: 'Anthropic', url: 'anthropic.com', score: 51, grade: 'D', category: 'Agent-Challenged', machineReadability: 18, semanticDepth: 10, agentDiscovery: 4, programmaticAccess: 10, contextEfficiency: 9, hasLLMsTxt: false, hasOpenAPI: false, hasSitemap: false, hasRobots: false, createdAt: new Date().toISOString() },
+  { rank: 15, site: 'OpenAI', url: 'openai.com', score: 41, grade: 'F', category: 'Agent-Opaque', machineReadability: 12, semanticDepth: 8, agentDiscovery: 8, programmaticAccess: 3, contextEfficiency: 10, hasLLMsTxt: false, hasOpenAPI: false, hasSitemap: true, hasRobots: true, createdAt: new Date().toISOString() },
 ];
 
 const gradeColors: Record<string, string> = {
@@ -186,102 +193,170 @@ export default function LeaderboardPage() {
         </div>
       </div>
 
-      {/* Leaderboard Table */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl overflow-hidden">
-          {/* Table Header */}
-          <div className="grid grid-cols-12 gap-4 px-6 py-4 bg-slate-800/50 text-sm font-medium text-slate-400 border-b border-slate-800">
-            <div className="col-span-1">Rank</div>
-            <div className="col-span-3">Site</div>
-            <div className="col-span-2 text-center">Grade</div>
-            <div className="col-span-1 text-center">Score</div>
-            <div className="col-span-5 hidden md:grid grid-cols-4 gap-2">
-              <div className="text-center" title="llms.txt">
-                <FileText className="w-4 h-4 mx-auto" />
-              </div>
-              <div className="text-center" title="OpenAPI">
-                <Code className="w-4 h-4 mx-auto" />
-              </div>
-              <div className="text-center" title="Sitemap">
-                <Map className="w-4 h-4 mx-auto" />
-              </div>
-              <div className="text-center" title="Robots.txt">
-                <Globe className="w-4 h-4 mx-auto" />
-              </div>
+      {/* A3 Framework Legend */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="bg-slate-900/30 border border-slate-800 rounded-xl p-6">
+          <h3 className="text-sm font-medium text-slate-400 mb-4">A3 Framework: Five Pillars</h3>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-cyan-400" />
+              <span className="text-slate-300">Machine-Readability</span>
+              <span className="text-slate-500 text-xs">/20</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-violet-400" />
+              <span className="text-slate-300">Semantic Depth</span>
+              <span className="text-slate-500 text-xs">/25</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-emerald-400" />
+              <span className="text-slate-300">Agent Discovery</span>
+              <span className="text-slate-500 text-xs">/20</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-amber-400" />
+              <span className="text-slate-300">Programmatic Access</span>
+              <span className="text-slate-500 text-xs">/20</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-rose-400" />
+              <span className="text-slate-300">Context Efficiency</span>
+              <span className="text-slate-500 text-xs">/15</span>
             </div>
           </div>
+        </div>
+      </div>
 
-          {/* Table Rows */}
+      {/* Leaderboard Cards */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="space-y-4">
           {leaderboardData.map((site, index) => (
             <motion.div
               key={site.site}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.05 }}
-              className="grid grid-cols-12 gap-4 px-6 py-4 border-b border-slate-800/50 hover:bg-slate-800/30 transition-colors items-center"
+              className="bg-slate-900/50 border border-slate-800 rounded-xl p-6 hover:border-slate-700 transition-colors"
             >
-              {/* Rank */}
-              <div className="col-span-1 flex items-center gap-2">
-                {site.rank <= 3 ? (
-                  rankIcons[site.rank - 1]
-                ) : (
-                  <span className="text-slate-500 font-mono">#{site.rank}</span>
-                )}
-              </div>
-
-              {/* Site */}
-              <div className="col-span-3">
-                <div className="font-medium text-slate-200">{site.site}</div>
-                <div className="text-sm text-slate-500">{site.url}</div>
-              </div>
-
-              {/* Grade */}
-              <div className="col-span-2 text-center">
-                <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-bold border ${gradeColors[site.grade]}`}>
-                  {site.grade}
-                </span>
-                <div className="text-xs text-slate-500 mt-1">{site.category}</div>
-              </div>
-
-              {/* Score */}
-              <div className="col-span-1 text-center">
-                <div className={`text-lg font-bold ${
-                  site.score >= 70 ? 'text-cyan-400' :
-                  site.score >= 60 ? 'text-amber-400' :
-                  site.score >= 50 ? 'text-orange-400' : 'text-red-400'
-                }`}>
-                  {site.score}
+              <div className="flex flex-col lg:flex-row lg:items-center gap-6">
+                {/* Left: Rank & Site Info */}
+                <div className="flex items-center gap-4 lg:w-64 shrink-0">
+                  <div className="w-10 h-10 flex items-center justify-center">
+                    {site.rank <= 3 ? (
+                      rankIcons[site.rank - 1]
+                    ) : (
+                      <span className="text-slate-500 font-mono text-lg">#{site.rank}</span>
+                    )}
+                  </div>
+                  <div>
+                    <div className="font-semibold text-white">{site.site}</div>
+                    <div className="text-sm text-slate-500">{site.url}</div>
+                  </div>
                 </div>
-              </div>
 
-              {/* Features */}
-              <div className="col-span-5 hidden md:grid grid-cols-4 gap-2">
-                <div className="text-center">
-                  {site.hasLLMsTxt ? (
-                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-xs">✓</span>
-                  ) : (
-                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-slate-800 text-slate-600 text-xs">−</span>
+                {/* Middle: Grade & Total Score */}
+                <div className="flex items-center gap-6 lg:w-48 shrink-0">
+                  <div className="text-center">
+                    <span className={`inline-flex items-center justify-center w-12 h-12 rounded-xl text-lg font-bold border ${gradeColors[site.grade]}`}>
+                      {site.grade}
+                    </span>
+                  </div>
+                  <div>
+                    <div className={`text-3xl font-bold ${
+                      site.score >= 70 ? 'text-cyan-400' :
+                      site.score >= 60 ? 'text-amber-400' :
+                      site.score >= 50 ? 'text-orange-400' : 'text-red-400'
+                    }`}>
+                      {site.score}
+                    </div>
+                    <div className="text-xs text-slate-500">Total Score</div>
+                  </div>
+                </div>
+
+                {/* Right: Five Pillars */}
+                <div className="flex-1 grid grid-cols-5 gap-2">
+                  {/* Machine-Readability */}
+                  <div className="text-center">
+                    <div className="text-xs text-slate-500 mb-1">Machine</div>
+                    <div className="h-2 bg-slate-800 rounded-full overflow-hidden mb-1">
+                      <div 
+                        className="h-full bg-cyan-400 rounded-full transition-all"
+                        style={{ width: `${(site.machineReadability / 20) * 100}%` }}
+                      />
+                    </div>
+                    <div className="text-sm font-medium text-cyan-400">{site.machineReadability}</div>
+                  </div>
+                  
+                  {/* Semantic Depth */}
+                  <div className="text-center">
+                    <div className="text-xs text-slate-500 mb-1">Semantic</div>
+                    <div className="h-2 bg-slate-800 rounded-full overflow-hidden mb-1">
+                      <div 
+                        className="h-full bg-violet-400 rounded-full transition-all"
+                        style={{ width: `${(site.semanticDepth / 25) * 100}%` }}
+                      />
+                    </div>
+                    <div className="text-sm font-medium text-violet-400">{site.semanticDepth}</div>
+                  </div>
+                  
+                  {/* Agent Discovery */}
+                  <div className="text-center">
+                    <div className="text-xs text-slate-500 mb-1">Discovery</div>
+                    <div className="h-2 bg-slate-800 rounded-full overflow-hidden mb-1">
+                      <div 
+                        className="h-full bg-emerald-400 rounded-full transition-all"
+                        style={{ width: `${(site.agentDiscovery / 20) * 100}%` }}
+                      />
+                    </div>
+                    <div className="text-sm font-medium text-emerald-400">{site.agentDiscovery}</div>
+                  </div>
+                  
+                  {/* Programmatic Access */}
+                  <div className="text-center">
+                    <div className="text-xs text-slate-500 mb-1">Programmatic</div>
+                    <div className="h-2 bg-slate-800 rounded-full overflow-hidden mb-1">
+                      <div 
+                        className="h-full bg-amber-400 rounded-full transition-all"
+                        style={{ width: `${(site.programmaticAccess / 20) * 100}%` }}
+                      />
+                    </div>
+                    <div className="text-sm font-medium text-amber-400">{site.programmaticAccess}</div>
+                  </div>
+                  
+                  {/* Context Efficiency */}
+                  <div className="text-center">
+                    <div className="text-xs text-slate-500 mb-1">Efficiency</div>
+                    <div className="h-2 bg-slate-800 rounded-full overflow-hidden mb-1">
+                      <div 
+                        className="h-full bg-rose-400 rounded-full transition-all"
+                        style={{ width: `${(site.contextEfficiency / 15) * 100}%` }}
+                      />
+                    </div>
+                    <div className="text-sm font-medium text-rose-400">{site.contextEfficiency}</div>
+                  </div>
+                </div>
+
+                {/* Far Right: Key Features */}
+                <div className="flex items-center gap-2 lg:w-40 shrink-0 justify-end">
+                  {site.hasLLMsTxt && (
+                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20" title="Has llms.txt">
+                      <FileText className="w-4 h-4 text-emerald-400" />
+                    </span>
                   )}
-                </div>
-                <div className="text-center">
-                  {site.hasOpenAPI ? (
-                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-xs">✓</span>
-                  ) : (
-                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-slate-800 text-slate-600 text-xs">−</span>
+                  {site.hasOpenAPI && (
+                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20" title="Has OpenAPI">
+                      <Code className="w-4 h-4 text-emerald-400" />
+                    </span>
                   )}
-                </div>
-                <div className="text-center">
-                  {site.hasSitemap ? (
-                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-xs">✓</span>
-                  ) : (
-                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-slate-800 text-slate-600 text-xs">−</span>
+                  {site.hasSitemap && (
+                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20" title="Has Sitemap">
+                      <Map className="w-4 h-4 text-emerald-400" />
+                    </span>
                   )}
-                </div>
-                <div className="text-center">
-                  {site.hasRobots ? (
-                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-xs">✓</span>
-                  ) : (
-                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-slate-800 text-slate-600 text-xs">−</span>
+                  {site.hasRobots && (
+                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20" title="Has Robots.txt">
+                      <Globe className="w-4 h-4 text-emerald-400" />
+                    </span>
                   )}
                 </div>
               </div>

@@ -14,6 +14,13 @@ interface LeaderboardEntry {
   score: number;
   grade: string;
   category: string;
+  // A3 Framework: Five Pillars
+  machineReadability: number;
+  semanticDepth: number;
+  agentDiscovery: number;
+  programmaticAccess: number;
+  contextEfficiency: number;
+  // Feature flags
   hasLLMsTxt: boolean;
   hasOpenAPI: boolean;
   hasSitemap: boolean;
@@ -75,6 +82,13 @@ export async function POST(request: NextRequest) {
       score: analysis.scores.overall,
       grade: analysis.grade,
       category: analysis.category,
+      // A3 Framework: Five Pillars scores
+      machineReadability: analysis.scores.machineReadability,
+      semanticDepth: analysis.scores.semanticDepth,
+      agentDiscovery: analysis.scores.agentDiscovery,
+      programmaticAccess: analysis.scores.programmaticAccess,
+      contextEfficiency: analysis.scores.contextEfficiency,
+      // Feature flags
       hasLLMsTxt: analysis.verifiedFiles.llmsTxt.exists,
       hasOpenAPI: analysis.verifiedFiles.openapiJson.exists || analysis.verifiedFiles.openapiYaml.exists,
       hasSitemap: analysis.verifiedFiles.sitemapXml.exists || analysis.verifiedFiles.sitemapIndex.exists,
