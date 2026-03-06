@@ -139,11 +139,13 @@ async function verifyAgentFiles(baseUrl: URL): Promise<AgentFiles> {
 }
 
 async function checkFile(
-  url: string, 
+  url: string | null, 
   key: keyof AgentFiles, 
   files: AgentFiles,
   isRedirectOk: boolean = false
 ): Promise<void> {
+  if (!url) return;
+  
   try {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 5000);
