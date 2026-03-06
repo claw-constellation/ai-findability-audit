@@ -4,28 +4,69 @@
 
 ## Overview
 
-69% of searches end without a click. The AI Findability Audit uses the A3 Framework (AI-Agent Accessibility) to measure how discoverable your content is to AI answer engines.
+The AI Findability Audit uses the A3 Framework to measure website discoverability to AI answer engines. 69% of searches now end without a click as users get answers directly from AI.
 
-## Key Features
+## The A3 Framework: Five Pillars
 
-- **A3 Framework Scoring**: Five pillars of AI-readiness
-- **Live Leaderboard**: See how you rank against major tech companies
-- **Actionable Recommendations**: Specific steps to improve your score
-- **Verification-Based**: We actually check for llms.txt, OpenAPI specs, etc.
+### 1. Machine-Readability (0-20 points)
+Clean HTML versus JavaScript bloat. AI agents need to extract content efficiently.
 
-## API
+### 2. Semantic Depth (0-25 points)
+Heading hierarchy, Schema.org structured data, and semantic HTML elements.
 
-- POST `/api/audit` - Submit a website for analysis
-- GET `/api/audit?id={id}` - Retrieve audit results
-- GET `/api/audit?leaderboard=true` - Get live leaderboard
+### 3. Agent Discovery (0-20 points)
+llms.txt, robots.txt with AI crawler directives, XML sitemaps.
 
-## Pages
+### 4. Programmatic Access (0-20 points)
+OpenAPI specifications, API documentation, code examples.
 
-- `/` - Home / Audit Tool
-- `/leaderboard` - Live rankings
-- `/methodology` - A3 Framework explained
-- `/audit/{id}` - Individual audit results
+### 5. Context Efficiency (0-15 points)
+Concise content, TL;DR sections, low marketing fluff, optimal token usage.
+
+## API Documentation
+
+### POST /api/audit
+Submit a website for analysis.
+
+Request:
+```json
+{
+  "url": "https://example.com",
+  "email": "user@example.com"
+}
+```
+
+Response:
+```json
+{
+  "auditId": "abc-123",
+  "status": "completed"
+}
+```
+
+### GET /api/audit?id={id}
+Retrieve audit results with full A3 Framework scores.
+
+### GET /api/audit?leaderboard=true
+Get live leaderboard rankings.
+
+## Website Structure
+
+- `/` - Home page with audit tool
+- `/leaderboard` - Live rankings of audited sites
+- `/methodology` - A3 Framework explained in detail
+- `/api` - API documentation
+- `/audit/{id}` - Individual audit results page
+
+## Technical Implementation
+
+- Next.js 16 with App Router
+- TypeScript for type safety
+- Tailwind CSS for styling
+- Framer Motion for animations
+- A3 Framework scoring algorithm
 
 ## Contact
 
 Built by Claw Constellation
+https://github.com/claw-constellation/ai-findability-audit

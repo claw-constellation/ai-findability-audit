@@ -18,6 +18,22 @@ export const metadata: Metadata = {
 export default function ApiDocsPage() {
   return (
     <div className="min-h-screen bg-[#0a0a0f] text-slate-200">
+      {/* Hidden Semantic Structure for AI Extraction */}
+      <div className="sr-only">
+        <h1>AI Findability Audit API Documentation</h1>
+        <h2>REST API Endpoints</h2>
+        <h3>POST Audit Endpoint</h3>
+        <p>Submit a website URL for AI accessibility analysis.</p>
+        <h3>GET Audit Results Endpoint</h3>
+        <p>Retrieve audit results by ID or get live leaderboard data.</p>
+        <h2>A3 Framework Scoring</h2>
+        <p>API returns scores across five pillars: Machine-Readability, Semantic Depth, Agent Discovery, Programmatic Access, and Context Efficiency.</p>
+        <h2>Authentication</h2>
+        <p>No API key required. Rate limits apply.</p>
+        <h2>OpenAPI Specification</h2>
+        <p>Download the complete OpenAPI 3.0 spec at /openapi.json</p>
+      </div>
+
       {/* Navigation */}
       <nav className="border-b border-slate-800/50 bg-[#0a0a0f]/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

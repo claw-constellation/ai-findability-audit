@@ -318,6 +318,22 @@ export default function Home() {
     <main className="relative min-h-screen text-slate-200 overflow-x-hidden">
       <ParticleBackground />
       
+      {/* Hidden Semantic Structure for AI Extraction */}
+      <div className="sr-only">
+        <h1>AI Findability Audit</h1>
+        <h2>Machine-Readability Analysis</h2>
+        <h2>Semantic Depth Scoring</h2>
+        <h2>Agent Discovery Verification</h2>
+        <h2>Programmatic Access Assessment</h2>
+        <h2>Context Efficiency Optimization</h2>
+        <h3>How It Works</h3>
+        <p>Scan your website to analyze AI accessibility using the A3 Framework.</p>
+        <h3>Get Your Score</h3>
+        <p>Receive a detailed breakdown across five pillars of AI-readiness.</p>
+        <h3>Optimize for AI</h3>
+        <p>Implement recommendations to improve visibility in AI answer engines.</p>
+      </div>
+
       {/* Content */}
       <div className="relative z-10">
         {/* Navigation */}

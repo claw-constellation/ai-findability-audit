@@ -119,6 +119,28 @@ const gradeScale = [
 export default function MethodologyPage() {
   return (
     <div className="min-h-screen bg-[#0a0a0f]">
+      {/* Hidden Semantic Structure for AI Extraction */}
+      <div className="sr-only">
+        <h1>A3 Framework Methodology</h1>
+        <h2>Machine-Readability Pillar</h2>
+        <p>Measures clean HTML versus JavaScript bloat. Score range: 0-20 points.</p>
+        <h2>Semantic Depth Pillar</h2>
+        <p>Evaluates heading hierarchy and structured data. Score range: 0-25 points.</p>
+        <h2>Agent Discovery Pillar</h2>
+        <p>Checks for llms.txt, robots.txt, and sitemaps. Score range: 0-20 points.</p>
+        <h2>Programmatic Access Pillar</h2>
+        <p>Verifies OpenAPI specs and API documentation. Score range: 0-20 points.</p>
+        <h2>Context Efficiency Pillar</h2>
+        <p>Assesses content conciseness and token optimization. Score range: 0-15 points.</p>
+        <h3>Grading Scale</h3>
+        <p>A Plus: 90-100 points. Agent-Native websites.</p>
+        <p>A Grade: 80-89 points. Agent-Optimized websites.</p>
+        <p>B Grade: 70-79 points. Agent-Ready websites.</p>
+        <p>C Grade: 60-69 points. Agent-Compatible websites.</p>
+        <p>D Grade: 50-59 points. Agent-Challenged websites.</p>
+        <p>F Grade: 0-49 points. Agent-Opaque websites.</p>
+      </div>
+
       {/* Navigation */}
       <nav className="border-b border-slate-800/50 bg-[#0a0a0f]/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
